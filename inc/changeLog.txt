@@ -1,0 +1,5 @@
+jquery.mb.verticalSlider
+
+
+1.0
+  Initial release.
