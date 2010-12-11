@@ -1,0 +1,115 @@
+<!doctype html>
+
+<!--
+  ~ jquery.mb.components
+  ~ Copyright (c) 2001-2010. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
+  ~ email: mbicocchi@open-lab.com
+  ~ site: http://pupunzi.com
+  ~
+  ~ Licences: MIT, GPL
+  ~ http://www.opensource.org/licenses/mit-license.php
+  ~ http://www.gnu.org/licenses/gpl.html
+  -->
+
+<html>
+<head>
+  <title>verticalSlider</title>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script type="text/javascript" src="inc/jquery.easing.1.3.js"></script>
+  <script type="text/javascript" src="inc/mbVerticalSlider.js"></script>
+  
+  <script type="text/javascript">
+    $(function(){
+
+      /*mb.ideas*/
+      if (self.location.href == top.location.href){
+        $("body").css({font:"normal 13px/16px 'trebuchet MS', verdana, sans-serif"});
+        var logo=$("<a href='http://pupunzi.com'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository' style='display:none;'></a>");
+        $("body").prepend(logo);
+        $("#logo").fadeIn();
+      }
+
+      $(".slider").mb_vSlider({ //default attributes of the mb.vSlider
+        template:"searchResult.html"
+        ,totalElements:120 //this param is used only in ajax modality and should be set dynamically.
+        ,easing:"easeOutExpo"
+        ,slideTimer:1000
+        ,nextEl:".vSnext"
+        ,prevEl:".vSprev"
+        ,height:300
+        ,width:200
+
+      },{ //data passed in the ajax query string
+        elementsPerPage:20
+        ,actualPage:0
+        ,foo:100
+      })
+
+    });
+  </script>
+
+
+  <style type="text/css">
+    body{
+      background: #a3a2a2;      
+    }
+    .slider{
+      -moz-box-shadow:inset 0px 0px 10px #555;
+      -webkit-box-shadow:inset 0px 0px 10px #555;
+      background: #868585;
+    }
+    .slider p{
+      border-top:1px solid #666;
+      /*border-bottom:1px solid gray;*/
+      padding:4px;
+      padding-left:10px;
+      margin:0;
+      min-height:30px;
+    }
+
+    .slider p:hover{
+      background: #000;
+    }
+
+    .slider p:hover.selected{
+      background: transparent;
+      color: white;
+    }
+    .slider p.selected{
+      color: white;
+    }
+
+    .slider p a{
+      display:block;
+      min-height:30px;
+      color:#ccc;
+      text-decoration:none;
+    }
+
+    .slider p.selected a{
+      color: #333;
+      font-weight:bold;
+    }
+
+  </style>
+
+</head>
+<body >
+
+
+<div id="wrapper">
+  <h1>mb.verticalSlider.demo</h1>
+  <button class="vSprev" onclick="$('.slider').vsPrevPage()">prev</button>
+  <button class="vSnext" onclick="$('.slider').vsNextPage()">next</button>
+  <br>
+  <br>
+
+  <div class="slider"></div>
+
+  <br>
+  <button class="vSprev" onclick="$('.slider').vsPrevPage()">prev</button>
+  <button class="vSnext" onclick="$('.slider').vsNextPage()">next</button>
+</div>
+
+</body>
+</html>
