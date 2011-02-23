@@ -11,14 +11,14 @@
 
 /*
  * Name:jquery.mb.verticalSlider
- * Version: 1.0
+ * Version: 1.1
  */
 
 (function($) {
   $.vSlider= {
     plugin:"mb.verticalSlider",
     author:"Matteo Bicocchi",
-    version:"1.0",
+    version:"1.1",
     defaults:{
       template:"",
       totalElements:0,
