@@ -54,7 +54,7 @@
       if(vSlider.opt.isAjax){
         $vSlider.vsLoadNext(true);
       }else{
-        vSlider.opt.totalElements=vSlider.opt.container.find("p").length;
+        vSlider.opt.totalElements=vSlider.opt.container.children().length;
       }
       $vSlider.vsInitElements();
       $vSlider.bind('mousewheel', function(event, delta) {
