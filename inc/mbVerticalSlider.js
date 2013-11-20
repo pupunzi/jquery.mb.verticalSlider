@@ -1,22 +1,13 @@
-/*
- * ******************************************************************************
- *  jquery.mb.components
- *  file: mbVerticalSlider.js
- *
- *  Copyright (c) 2001-2013. Matteo Bicocchi (Pupunzi);
- *  Open lab srl, Firenze - Italy
- *  email: matteo@open-lab.com
- *  site: 	http://pupunzi.com
- *  blog:	http://pupunzi.open-lab.com
- * 	http://open-lab.com
- *
- *  Licences: MIT, GPL
- *  http://www.opensource.org/licenses/mit-license.php
- *  http://www.gnu.org/licenses/gpl.html
- *
- *  last modified: 02/10/13 22.43
- *  *****************************************************************************
- */
+/*******************************************************************************
+ jquery.mb.components
+ Copyright (c) 2001-2011. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
+ email: mbicocchi@open-lab.com
+ site: http://pupunzi.com
+
+ Licences: MIT, GPL
+ http://www.opensource.org/licenses/mit-license.php
+ http://www.gnu.org/licenses/gpl.html
+ ******************************************************************************/
 
 /*
  * Name:jquery.mb.verticalSlider
@@ -54,7 +45,7 @@
       $.extend(vSlider.opt,$.vSlider.defaults,options);
       $.extend(vSlider.data,$.vSlider.data,data);
       $.vSlider.isSliding=false;
-      $vSlider.css({width:vSlider.opt.width, height:vSlider.opt.height, overflow:"hidden", position:"relative"});
+      $vSlider.css({width:vSlider.opt.width, height:vSlider.opt.height, position:"relative"});
       var vSliderContainer=$("<div/>").addClass("vSliderContainer").css({position:"absolute"});
       $vSlider.wrapInner(vSliderContainer);
       vSlider.opt.container = $vSlider.find(".vSliderContainer");
@@ -99,9 +90,9 @@
     initElements:function(){
       var $vSlider= this;
       var vSlider= $(this).get(0);
-      vSlider.opt.container.find("p").each(function(){
+      vSlider.opt.container.find("li").each(function(){
         $(this).attr("top",Math.floor($(this).position().top)).click(function(){
-          vSlider.opt.container.find("p").removeClass("selected");
+          vSlider.opt.container.find("li").removeClass("selected");
           $(this).addClass("selected");
           $(this).find("a").blur();
         });
@@ -111,16 +102,17 @@
     nextPage: function(){
       if($.vSlider.isSliding) return;
       var $vSlider=this;
-      var vSlider=this.get(0);
+      var vSlider = this.get(0);
+      var vSliderContainer = $vSlider.find('.vSliderContainer');
       var totalPages= vSlider.opt.totalElements/vSlider.data.elementsPerPage;
       $.vSlider.isSliding=true;
       vSlider.data.actualPage++;
       slide();
       function slide(){
-        var topP= vSlider.opt.container.find("p").filter(function(){return $(this).attr("top")<=((vSlider.opt.height-20)*vSlider.data.actualPage)});
+        var topP= vSlider.opt.container.find("li").filter(function(){return $(this).attr("top")<=((vSlider.opt.height-20)*vSlider.data.actualPage)});
         topP=topP.eq(topP.length-1);
-        if (vSlider.opt.container.outerHeight()>(vSlider.opt.height*vSlider.data.actualPage)+vSlider.opt.height)
-          vSlider.opt.container.animate({top:-(topP.attr("top"))},
+        if (vSliderContainer.outerHeight() > (vSlider.opt.height * vSlider.data.actualPage) + vSlider.opt.height)
+            vSliderContainer.animate({ top: -(topP.attr("top")) },
                   vSlider.opt.slideTimer,
                   vSlider.opt.easing,
                   function(){
@@ -131,7 +123,7 @@
                       $vSlider.vsLoadNext()
                   });
         else{
-          vSlider.opt.container.animate({top:-vSlider.opt.container.outerHeight()+vSlider.opt.height},
+            vSliderContainer.animate({ top: -vSliderContainer.outerHeight() + vSlider.opt.height },
                   vSlider.opt.slideTimer,
                   vSlider.opt.easing,
                   function(){
@@ -144,16 +136,18 @@
         }
       }
     },
-    prevPage: function(){
+    prevPage: function () {
+        
       if($.vSlider.isSliding) return;
       var $vSlider=this;
-      var vSlider=this.get(0);
+      var vSlider = this.get(0);
+      var vSliderContainer = $vSlider.find('.vSliderContainer');
       if(vSlider.data.actualPage>=1){
         $.vSlider.isSliding=true;
         vSlider.data.actualPage--;
-        var topP= vSlider.opt.container.find("p").filter(function(){return $(this).attr("top")>=((vSlider.opt.height-20)*vSlider.data.actualPage)});
+        var topP = vSliderContainer.find("li").filter(function () { return $(this).attr("top") >= ((vSlider.opt.height - 20) * vSlider.data.actualPage) });
         topP=topP.eq(0);
-        vSlider.opt.container.animate({top:-(topP.attr("top"))},vSlider.opt.slideTimer,vSlider.opt.easing,
+        vSliderContainer.animate({ top: -(topP.attr("top")) }, vSlider.opt.slideTimer, vSlider.opt.easing,
                 function(){
                   $.vSlider.isSliding=false;
                   $vSlider.vsManageControls();
@@ -163,17 +157,19 @@
 
     },
     manageControls: function(){
-      var $vSlider=this;
-      var vSlider=this.get(0);
+        var $vSlider = this;
+        var vSlider = this.get(0);
+        var prevBtn = $(vSlider).siblings(vSlider.opt.prevEl);
+        var nextBtn = $(vSlider).siblings(vSlider.opt.nextEl);
       if(vSlider.data.actualPage==0){
-        $(vSlider.opt.prevEl).attr("disabled",true).addClass("disabled");
-        $(vSlider.opt.nextEl).attr("disabled",false).removeClass("disabled");
+          $(prevBtn).attr("disabled", true).addClass("disabled");
+          $(nextBtn).attr("disabled", false).removeClass("disabled");
       }else if(vSlider.opt.container.outerHeight()<(vSlider.opt.height*vSlider.data.actualPage)+vSlider.opt.height){
-        $(vSlider.opt.prevEl).attr("disabled",false).removeClass("disabled");
-        $(vSlider.opt.nextEl).attr("disabled",true).addClass("disabled");
+          $(prevBtn).attr("disabled", false).removeClass("disabled");
+          $(nextBtn).attr("disabled", true).addClass("disabled");
       }else{
-        $(vSlider.opt.prevEl).attr("disabled",false).removeClass("disabled");
-        $(vSlider.opt.nextEl).attr("disabled",false).removeClass("disabled");
+          $(prevBtn).attr("disabled", false).removeClass("disabled");
+          $(nextBtn).attr("disabled", false).removeClass("disabled");
       }
     }
   };
