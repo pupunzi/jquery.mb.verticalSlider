@@ -16,7 +16,7 @@
   ~  http://www.opensource.org/licenses/mit-license.php
   ~  http://www.gnu.org/licenses/gpl.html
   ~
-  ~  last modified: 02/10/13 22.43
+  ~  last modified: 20/11/13 19.43
   ~  ******************************************************************************/
   -->
 
@@ -67,7 +67,8 @@
       -webkit-box-shadow:inset 0px 0px 10px #555;
       background: #868585;
     }
-    .slider p{
+
+    .slider li{
       border-top:1px solid #666;
       /*border-bottom:1px solid gray;*/
       padding:4px;
@@ -76,26 +77,32 @@
       min-height:30px;
     }
 
-    .slider p:hover{
+ .slider ul{
+     list-style-type: none;
+     padding: 0px;
+     margin: 0px;
+    }
+
+    .slider li:hover{
       background: #000;
     }
 
-    .slider p:hover.selected{
+    .slider li:hover.selected{
       background: transparent;
       color: white;
     }
-    .slider p.selected{
+    .slider li.selected{
       color: white;
     }
 
-    .slider p a{
+    .slider li a{
       display:block;
       min-height:30px;
       color:#ccc;
       text-decoration:none;
     }
 
-    .slider p.selected a{
+    .slider li.selected a{
       color: #333;
       font-weight:bold;
     }

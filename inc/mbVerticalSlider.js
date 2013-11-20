@@ -1,13 +1,22 @@
-/*******************************************************************************
- jquery.mb.components
- Copyright (c) 2001-2011. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
- email: mbicocchi@open-lab.com
- site: http://pupunzi.com
-
- Licences: MIT, GPL
- http://www.opensource.org/licenses/mit-license.php
- http://www.gnu.org/licenses/gpl.html
- ******************************************************************************/
+/*
+ * ******************************************************************************
+ *  jquery.mb.components
+ *  file: mbVerticalSlider.js
+ *
+ *  Copyright (c) 2001-2013. Matteo Bicocchi (Pupunzi);
+ *  Open lab srl, Firenze - Italy
+ *  email: matteo@open-lab.com
+ *  site: 	http://pupunzi.com
+ *  blog:	http://pupunzi.open-lab.com
+ * 	http://open-lab.com
+ *
+ *  Licences: MIT, GPL
+ *  http://www.opensource.org/licenses/mit-license.php
+ *  http://www.gnu.org/licenses/gpl.html
+ *
+ *  last modified: 20/11/13 19.44
+ *  *****************************************************************************
+ */
 
 /*
  * Name:jquery.mb.verticalSlider
@@ -18,7 +27,7 @@
   $.vSlider= {
     plugin:"mb.verticalSlider",
     author:"Matteo Bicocchi",
-    version:"1.1",
+    version:"1.5",
     defaults:{
       template:"",
       totalElements:0,
@@ -37,36 +46,38 @@
       actualPage:0
     },
     init: function(options,data){
-      if(data==undefined)data={};
-      var $vSlider=this;
-      var vSlider=this.get(0);
-      vSlider.opt={};
-      vSlider.data={};
-      $.extend(vSlider.opt,$.vSlider.defaults,options);
-      $.extend(vSlider.data,$.vSlider.data,data);
-      $.vSlider.isSliding=false;
-      $vSlider.css({width:vSlider.opt.width, height:vSlider.opt.height, position:"relative"});
-      var vSliderContainer=$("<div/>").addClass("vSliderContainer").css({position:"absolute"});
-      $vSlider.wrapInner(vSliderContainer);
-      vSlider.opt.container = $vSlider.find(".vSliderContainer");
-      vSlider.opt.isAjax = vSlider.opt.template && vSlider.opt.template!="";
-      vSlider.opt.pageloaded = new Array();
-      if(vSlider.opt.isAjax){
-        $vSlider.vsLoadNext(true);
-      }else{
-        vSlider.opt.totalElements=vSlider.opt.container.children().length;
-      }
-      $vSlider.vsInitElements();
-      $vSlider.bind('mousewheel', function(event, delta) {
-        if(delta<-1 && !$.vSlider.isSliding && (vSlider.opt.container.outerHeight()>(vSlider.opt.height*vSlider.data.actualPage)+vSlider.opt.height)){
-          $vSlider.vsNextPage();
-        }
-        if(delta>1 && !$.vSlider.isSliding && vSlider.data.actualPage>=0){
-          $vSlider.vsPrevPage();
-        }
-        return false;
-      });
-      $vSlider.vsManageControls(vSlider.data.actualPage);
+	    return this.each(function(){
+		    if(data==undefined)data={};
+		    var $vSlider=$(this);
+		    var vSlider=$vSlider.get(0);
+		    vSlider.opt={};
+		    vSlider.data={};
+		    $.extend(vSlider.opt,$.vSlider.defaults,options);
+		    $.extend(vSlider.data,$.vSlider.data,data);
+		    $.vSlider.isSliding=false;
+		    $vSlider.css({width:vSlider.opt.width, height:vSlider.opt.height, overflow:"hidden", position:"relative"});
+		    var vSliderContainer=$("<div/>").addClass("vSliderContainer").css({position:"absolute"});
+		    $vSlider.wrapInner(vSliderContainer);
+		    vSlider.opt.container = $vSlider.find(".vSliderContainer");
+		    vSlider.opt.isAjax = vSlider.opt.template && vSlider.opt.template!="";
+		    vSlider.opt.pageloaded = new Array();
+		    if(vSlider.opt.isAjax){
+			    $vSlider.vsLoadNext(true);
+		    }else{
+			    vSlider.opt.totalElements=vSlider.opt.container.children().length;
+		    }
+		    $vSlider.vsInitElements();
+		    $vSlider.bind('mousewheel', function(event, delta) {
+			    if(delta<-1 && !$.vSlider.isSliding && (vSlider.opt.container.outerHeight()>(vSlider.opt.height*vSlider.data.actualPage)+vSlider.opt.height)){
+				    $vSlider.vsNextPage();
+			    }
+			    if(delta>1 && !$.vSlider.isSliding && vSlider.data.actualPage>=0){
+				    $vSlider.vsPrevPage();
+			    }
+			    return false;
+		    });
+		    $vSlider.vsManageControls(vSlider.data.actualPage);
+	    })
     },
     loadNext:function(firstLoad){
       var $vSlider= this;
